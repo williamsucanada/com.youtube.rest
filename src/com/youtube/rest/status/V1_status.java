@@ -1,7 +1,15 @@
 package com.youtube.rest.status;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+import org.codehaus.jettison.json.JSONArray;
+
+import com.youtube.dao.Oracle308tube;
 
 /**
  * This is the root path for our restful api service
@@ -48,5 +56,47 @@ public class V1_status {
 	public String returnVersion() {
 		return "<p>Version:</p>" + api_version;
 	}
+	
+	@Path("/database")
+	@GET
+	@Produces(MediaType.TEXT_HTML)
+	public String returnDatabasesStatus() throws Exception {
+
+		PreparedStatement query = null;
+		String myString = null;
+		String returnString = null;
+		Connection conn = null;
+
+		try {
+
+			conn = Oracle308tube.oracle308tubeConn().getConnection();
+			query = conn
+					.prepareStatement("select to_char(sysdate,'YYYY-MM-DD HH24:MI:SS') DATETIME "
+							+ "from sys.dual");
+			ResultSet rs = query.executeQuery();
+
+			while (rs.next()) {
+
+				myString = rs.getString("DATETIME");
+
+			}
+
+			query.close(); // close connection
+			returnString = "<p>Database Status</p> "
+					+ "<p>Database Date/Time return: " + myString + "</p>";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+
+			if (conn != null) {
+				conn.close();
+			}
+		}
+
+		return returnString;
+	}
+
 
 }
