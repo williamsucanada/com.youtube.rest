@@ -2,8 +2,10 @@ package com.youtube.util;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
+//import org.owasp.esapi.ESAPI;
 
 import java.sql.ResultSet;
+//import org.owasp.esapi.*;
 
 //import org.owasp.esapi.ESAPI;
 
@@ -32,7 +34,7 @@ public class ToJSON {
 	public JSONArray toJSONArray(ResultSet rs) throws Exception {
 
 		JSONArray json = new JSONArray(); // JSON array that will be returned
-		// String temp = null;
+		//String temp = null;
 
 		try {
 
@@ -78,7 +80,12 @@ public class ToJSON {
 					} else if (rsmd.getColumnType(i) == java.sql.Types.NVARCHAR) {
 						obj.put(column_name, rs.getNString(column_name));
 						/* Debug */System.out.println("ToJson: NVARCHAR");
-					} else if (rsmd.getColumnType(i) == java.sql.Types.VARCHAR) {
+					} else if (rsmd.getColumnType(i) == java.sql.Types.VARCHAR) {						
+						//temp = rs.getString(column_name);
+						//temp =ESAPI.encoder().canonicalize(temp);
+						//temp =ESAPI.encoder().encodeForHTML(temp);
+						//obj.put(column_name, temp);
+						
 						obj.put(column_name, rs.getNString(column_name));
 					} else if (rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
 						obj.put(column_name, rs.getInt(column_name));
