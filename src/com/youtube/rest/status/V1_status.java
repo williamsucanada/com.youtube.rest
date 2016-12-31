@@ -69,7 +69,7 @@ public class V1_status {
 
 		try {
 
-			conn = Oracle308tube.oracle308tubeConn().getConnection();
+			conn = Oracle308tube.Oracle308tubeConn().getConnection();
 			query = conn
 					.prepareStatement("select to_char(sysdate,'YYYY-MM-DD HH24:MI:SS') DATETIME "
 							+ "from sys.dual");

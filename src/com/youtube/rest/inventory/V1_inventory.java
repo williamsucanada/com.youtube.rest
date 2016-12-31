@@ -46,7 +46,7 @@ public class V1_inventory {
 		Response rb = null;
 
 		try {
-			conn = Oracle308tube.oracle308tubeConn().getConnection();
+			conn = Oracle308tube.Oracle308tubeConn().getConnection();
 			query = conn.prepareStatement("select * " + "from PC_PARTS");
 
 			ResultSet rs = query.executeQuery();
