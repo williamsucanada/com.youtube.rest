@@ -91,5 +91,44 @@ public class V2_inventory {
 		
 		return Response.ok(returnString).build();
 	}
+	
+	/**
+	 * This method does a search on both product and the product item number.
+	 * It uses PathParam to bring in both parameters.
+	 * 
+	 * Example:
+	 * http://localhost:7001/com.youtube.rest/api/v2/inventory/ASUS/168131318
+	 * 
+	 * @param brand - product brand name
+	 * @param item_number - product item number
+	 * @return - json array results list from the database
+	 * @throws Exception
+	 */
+	@Path("/{brand}/{item_number}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response returnSpecificBrandItem(
+				@PathParam("brand") String brand,
+				@PathParam("item_number") int item_number) 
+				throws Exception {
+		
+		String returnString = null;
+		
+		JSONArray json = new JSONArray();
+		
+		try {
+			
+			Schema308tube dao = new Schema308tube();
+			
+			json = dao.queryReturnBrandItemNumber(brand, item_number);
+			returnString = json.toString();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500).entity("Server was not able to process your request").build();
+		}
+		
+		return Response.ok(returnString).build();
+	}
 
 }
