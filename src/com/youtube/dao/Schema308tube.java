@@ -10,6 +10,66 @@ import org.codehaus.jettison.json.JSONArray;
 import com.youtube.util.ToJSON;
 
 public class Schema308tube extends Oracle308tube{
+	
+	/**
+	 * This method will insert a record into the PC_PARTS table. 
+	 * 
+	 * Note: there is no validation being done... if this was a real project you
+	 * must do validation here!
+	 * 
+	 * @param PC_PARTS_TITLE
+	 * @param PC_PARTS_CODE
+	 * @param PC_PARTS_MAKER
+	 * @param PC_PARTS_AVAIL - integer column
+	 * @param PC_PARTS_DESC
+	 * @return integer 200 for success, 500 for error
+	 * @throws Exception
+	 */
+	public int insertIntoPC_PARTS(String PC_PARTS_TITLE, 
+											String PC_PARTS_CODE, 
+											String PC_PARTS_MAKER, 
+											String PC_PARTS_AVAIL, 
+											String PC_PARTS_DESC) 
+										throws Exception {
+
+		PreparedStatement query = null;
+		Connection conn = null;
+
+		try {
+			/*
+			 * If this was a real application, you should do data validation here
+			 * before starting to insert data into the database.
+			 * 
+			 * Important: The primary key on PC_PARTS table will auto increment.
+			 * 		That means the PC_PARTS_PK column does not need to be apart of the 
+			 * 		SQL insert query below.
+			 */
+			conn = oraclePcPartsConnection();
+			query = conn.prepareStatement("insert into PC_PARTS " +
+					"(PC_PARTS_TITLE, PC_PARTS_CODE, PC_PARTS_MAKER, PC_PARTS_AVAIL, PC_PARTS_DESC) " +
+					"VALUES ( ?, ?, ?, ?, ? ) ");
+
+			query.setString(1, PC_PARTS_TITLE);
+			query.setString(2, PC_PARTS_CODE);
+			query.setString(3, PC_PARTS_MAKER);
+
+			//PC_PARTS_AVAIL is a number column, so we need to convert the String into a integer
+			int avilInt = Integer.parseInt(PC_PARTS_AVAIL);
+			query.setInt(4, avilInt);
+
+			query.setString(5, PC_PARTS_DESC);
+			query.executeUpdate(); //note the new command for insert statement
+
+		} catch(Exception e) {
+			e.printStackTrace();
+			return 500; //if a error occurs, return a 500
+		}
+		finally {
+			if (conn != null) conn.close();
+		}
+
+		return 200;
+	}
 
 	/**
 	 * This method will search for a specific brand from the PC_PARTS table.
