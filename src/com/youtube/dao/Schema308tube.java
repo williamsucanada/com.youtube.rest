@@ -25,7 +25,8 @@ public class Schema308tube extends Oracle308tube{
 	 * @return integer 200 for success, 500 for error
 	 * @throws Exception
 	 */
-	public int insertIntoPC_PARTS(String PC_PARTS_TITLE, 
+	public int insertIntoPC_PARTS(          String PC_PARTS_PK,
+			                                String PC_PARTS_TITLE, 
 											String PC_PARTS_CODE, 
 											String PC_PARTS_MAKER, 
 											String PC_PARTS_AVAIL, 
@@ -46,18 +47,20 @@ public class Schema308tube extends Oracle308tube{
 			 */
 			conn = oraclePcPartsConnection();
 			query = conn.prepareStatement("insert into PC_PARTS " +
-					"(PC_PARTS_TITLE, PC_PARTS_CODE, PC_PARTS_MAKER, PC_PARTS_AVAIL, PC_PARTS_DESC) " +
-					"VALUES ( ?, ?, ?, ?, ? ) ");
-
-			query.setString(1, PC_PARTS_TITLE);
-			query.setString(2, PC_PARTS_CODE);
-			query.setString(3, PC_PARTS_MAKER);
+					"(PC_PARTS_PK, PC_PARTS_TITLE, PC_PARTS_CODE, PC_PARTS_MAKER, PC_PARTS_AVAIL, PC_PARTS_DESC) " +
+					"VALUES (?, ?, ?, ?, ?, ? )");
+			
+			int avilInt_PK = Integer.parseInt(PC_PARTS_PK);
+			query.setInt(1, avilInt_PK);
+			query.setString(2, PC_PARTS_TITLE);
+			query.setString(3, PC_PARTS_CODE);
+			query.setString(4, PC_PARTS_MAKER);
 
 			//PC_PARTS_AVAIL is a number column, so we need to convert the String into a integer
 			int avilInt = Integer.parseInt(PC_PARTS_AVAIL);
-			query.setInt(4, avilInt);
+			query.setInt(5, avilInt);
 
-			query.setString(5, PC_PARTS_DESC);
+			query.setString(6, PC_PARTS_DESC);
 			query.executeUpdate(); //note the new command for insert statement
 
 		} catch(Exception e) {
