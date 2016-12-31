@@ -53,5 +53,43 @@ public class V2_inventory {
 		
 		return Response.ok(returnString).build();
 	}
+	
+	/**
+	 * This method will return the specific brand of PC parts the user is looking for.
+	 * It is very similar to the method returnBrandParts except this method uses the 
+	 * PathParam to bring in the data.
+	 * 
+	 * Example would be:
+	 * http://localhost:7001/com.youtube.rest/api/v2/inventory/ASUS
+	 * 
+	 * @param brand - product brand name
+	 * @return - json array results list from the database
+	 * @throws Exception
+	 */
+	@Path("/{brand}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response returnBrand(
+				@PathParam("brand") String brand) 
+				throws Exception {
+		
+		String returnString = null;
+		
+		JSONArray json = new JSONArray();
+		
+		try {
+			
+			Schema308tube dao = new Schema308tube();
+			
+			json = dao.queryReturnBrandParts(brand);
+			returnString = json.toString();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500).entity("Server was not able to process your request").build();
+		}
+		
+		return Response.ok(returnString).build();
+	}
 
 }
