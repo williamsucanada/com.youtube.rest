@@ -20,8 +20,7 @@ $(document).ready(function() {
 		//console.log("submit button has been clicked");
 		e.preventDefault(); //cancel form submit
 		
-		var jsObj = $post_example.serializeObject()
-			, ajaxObj = {};
+		var jsObj = $post_example.serializeObject(), ajaxObj = {};
 		
 		//console.log(jsObj);
 		

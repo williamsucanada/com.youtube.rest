@@ -4,7 +4,6 @@ import javax.ws.rs.Path;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
-import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -17,6 +16,12 @@ import org.codehaus.jettison.json.JSONArray;
 
 import com.youtube.dao.Schema308tube;
 
+/**
+ * This class is used to manage computer parts inventory. It is a improvement
+ * to V1_inventory.java
+ * 
+ * @author 308tube
+ */
 @Path("/v2/inventory/")
 public class V2_inventory {
 
@@ -154,7 +159,7 @@ public class V2_inventory {
 	 * @throws Exception
 	 */
 	@POST
-	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED,
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED,
 			MediaType.APPLICATION_JSON })
 	// @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
